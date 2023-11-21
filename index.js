@@ -1,10 +1,10 @@
 
-const AWS = require("aws-sdk");
-const docClient = new AWS.DynamoDB.DocumentClient({ region: "eu-north-1" });
-const uuid = require("uuid");
+// const AWS = require("aws-sdk");
+// const docClient = new AWS.DynamoDB.DocumentClient({ region: "eu-north-1" });
+// const uuid = require("uuid");
 
 
-
+//Lambda Accept handler function
 
 // exports.handler = async (event) => {
 //   // TODO implement
@@ -16,65 +16,66 @@ const uuid = require("uuid");
 //   return response;
 // };
 
-const DynamoDBInsertOperation = async (args) => {
+// const DynamoDBInsertOperation = async (args) => {
 
-  const id = uuid.v1();
-  const name = 'jony'
-  const gender = 'male'
-  const phone = "12411"
-  const age = "32"
-  let data;
+//   const id = uuid.v1();
+//   const name = 'jony'
+//   const gender = 'male'
+//   const phone = "12411"
+//   const age = "32"
 
-  try {
-    data = await docClient.query({
-      TableName: process.env.API_LIKERBACKENDGRAPHQLMAINSLA_AUTOEVENTTABLE_NAME ? process.env.API_LIKERBACKENDGRAPHQLMAINSLA_AUTOEVENTTABLE_NAME : "OnlineShopUser",
-      IndexName: "phone-index",
-      KeyConditionExpression: "phone = :v1",
-      ExpressionAttributeValues: {
-        ":v1": phone,
-      },
-    }).promise();
+//   let data;
 
-  } catch (error) {
-    console.log(error)
-  }
+//   try {
+//     data = await docClient.query({
+//       TableName: process.env.API_LIKERBACKENDGRAPHQLMAINSLA_AUTOEVENTTABLE_NAME ? process.env.API_LIKERBACKENDGRAPHQLMAINSLA_AUTOEVENTTABLE_NAME : "OnlineShopUser",
+//       IndexName: "phone-index",
+//       KeyConditionExpression: "phone = :v1",
+//       ExpressionAttributeValues: {
+//         ":v1": phone,
+//       },
+//     }).promise();
 
-  if (data?.Items?.length == 0) {
-    try {
-      const data = await docClient.put({
-        TableName: process.env.API_LIKERBACKENDGRAPHQLMAINSLA_AUTOEVENTTABLE_NAME ? process.env.API_LIKERBACKENDGRAPHQLMAINSLA_AUTOEVENTTABLE_NAME : "OnlineShopUser",
-        Item: {
-          id: id,
-          name: name,
-          gender: gender,
-          phone: phone,
-          age: age
-        },
-        ConditionExpression: "id <> :v1",
-        ExpressionAttributeValues: {
-          ":v1": id,
-        },
-      }).promise();
-      console.log('put', JSON.stringify(data))
-      return {
-        id: id,
-        name: name,
-        gender: gender,
-        phone: phone,
-        age: agejj
-      };
+//   } catch (error) {
+//     console.log(error)
+//   }
 
-    } catch (error) {
-      console.log(error)
-    }
-  } else {
-    return {
-      statusCode: 403,
-      body: "phone number already exists"
-    }
-  }
+//   if (data?.Items?.length == 0) {
+//     try {
+//       const data = await docClient.put({
+//         TableName: process.env.API_LIKERBACKENDGRAPHQLMAINSLA_AUTOEVENTTABLE_NAME ? process.env.API_LIKERBACKENDGRAPHQLMAINSLA_AUTOEVENTTABLE_NAME : "OnlineShopUser",
+//         Item: {
+//           id: id,
+//           name: name,
+//           gender: gender,
+//           phone: phone,
+//           age: age
+//         },
+//         ConditionExpression: "id <> :v1",
+//         ExpressionAttributeValues: {
+//           ":v1": id,
+//         },
+//       }).promise();
+//       console.log('put', JSON.stringify(data))
+//       return {
+//         id: id,
+//         name: name,
+//         gender: gender,
+//         phone: phone,
+//         age: agejj
+//       };
 
-};
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   } else {
+//     return {
+//       statusCode: 403,
+//       body: "phone number already exists"
+//     }
+//   }
+
+// };
 
 
 
@@ -149,9 +150,9 @@ const DynamoDBInsertOperation = async (args) => {
 
 
 
-(async () => {
-  const response = await DynamoDBInsertOperation()
-  // const response = await DynamoDBScanOperation()
-  // const response = await DynamoDBIndexOperation()
-  console.log(response)
-})()
+// (async () => {
+//   const response = await DynamoDBInsertOperation()
+//   // const response = await DynamoDBScanOperation()
+//   // const response = await DynamoDBIndexOperation()
+//   console.log(response)
+// })()

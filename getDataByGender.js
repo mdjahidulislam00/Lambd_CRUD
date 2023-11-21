@@ -2,29 +2,31 @@ const AWS = require("aws-sdk");
 const docClient = new AWS.DynamoDB.DocumentClient({ region: "eu-north-1" });
 
 const DynamoDBGetData = async () => {
+    const filterByGender = 'female'
     const params = {
         TableName: 'OnlineShopUser',
-        Key: {
-            id: '001'
+        FilterExpression: "gender = :a1",
+        ExpressionAttributeValues: {
+            ":a1": filterByGender
         }
     };
 
     try {
-        const data = await dynamoDB.get(params).promise();
+        const data = await docClient.scan(params).promise();
 
-        console.log('Retrieved Item:', data.Item);
+        console.log('Dynamodb Match Items:');
+        return data;
     } catch (error) {
         console.error('Error:', error);
 
-        // Return an error response
         return {
             statusCode: 500,
             body: JSON.stringify('Error fetching data from DynamoDB')
         };
     }
-}
+};
 
 (async () => {
-    const response = await DynamoDBGetData()
-    console.log(response)
-})()
+    const response = await DynamoDBGetData();
+    console.log(response);
+})();
